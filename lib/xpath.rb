@@ -1,6 +1,3 @@
-# /lead[@shared=true]/pii/first_name?=Aans
-# /lead[@shared=true]/pii[@multiple=true]/last_name?=Tammam
-
 module BodyParty
   XPathParser = Struct.new(:xpath) do
     def initialize(xpath)

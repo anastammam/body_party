@@ -1,5 +1,3 @@
-require './body_party'
-
 module BodyParty
   class Document
     attr_accessor :xpaths, :doc

@@ -1,5 +1,5 @@
-require 'xpath'
-require 'document'
-require 'node'
+require './lib/xpath'
+require './lib/document'
+require './lib/node'
 require 'debug'
 require 'ox'

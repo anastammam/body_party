@@ -3,6 +3,7 @@ module BodyParty
     attr_accessor :node
 
     def initialize(xpath_element)
+      raise ArgumentError, "xpath_element can't be nil" if xpath_element.nil?
       self.xpath_element = xpath_element
       self.node = ox_node
     end
