@@ -1,6 +1,8 @@
-source "https://rubygems.org"
+# frozen_string_literal: true
 
-gem 'ox'
-gem 'rspec'
+source 'https://rubygems.org'
+
 gem 'debug'
 gem 'equivalent-xml'
+gem 'ox'
+gem 'rspec'

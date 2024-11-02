@@ -1,15 +1,15 @@
-# require 'compare-xml'
-# require 'nokogiri'
+# frozen_string_literal: true
 
-require 'rspec/matchers' # req by equivalent-xml custom matcher `be_equivalent_to`
+require 'rspec/matchers'
 require 'equivalent-xml'
 
+# rubocop:disable Metrics/BlockLength, Layout/LineLength
 describe BodyParty::Document do
-  describe "generate_body" do
-    context "one level nodes" do
+  describe 'generate_body' do
+    context 'one level nodes' do
     end
-    context "two level nodes" do
-      it "should return expected XML without attributes nodes" do
+    context 'two level nodes' do
+      it 'should return expected XML without attributes nodes' do
         xpaths = [
           'person/name?=John Doe',
           'person/age?=30',
@@ -20,7 +20,7 @@ describe BodyParty::Document do
           'company/name?=Tech Solutions Inc.',
           'company/industry?=Software',
           'company/location?=San Francisco',
-          'company/employees?=500',
+          'company/employees?=500'
         ]
         generated_xml = described_class.generate(xpaths: xpaths)
 
@@ -45,7 +45,7 @@ describe BodyParty::Document do
         expect(generated_xml).to be_equivalent_to(example)
       end
 
-      it "should return expected XML with one attribute" do
+      it 'should return expected XML with one attribute' do
         xpaths = [
           'person[@id=1]/name?=John Doe',
           'person[@id=1]/age?=30',
@@ -60,7 +60,7 @@ describe BodyParty::Document do
           'company[@id=10]/name?=Tech Solutions Inc 2',
           'company[@id=10]/industry?=Sass',
           'company[@id=10]/location?=New york',
-          'company[@id=10]/employees?=1000',
+          'company[@id=10]/employees?=1000'
         ]
         generated_xml = described_class.generate(xpaths: xpaths)
 
@@ -91,7 +91,7 @@ describe BodyParty::Document do
         expect(generated_xml).to be_equivalent_to(example)
       end
 
-      it "should return expected XML with more than one attribute" do
+      it 'should return expected XML with more than one attribute' do
         xpaths = [
           'person[@id=1 @db_id=847503]/name?=John Doe',
           'person[@id=1 @db_id=847503]/age?=30',
@@ -106,7 +106,7 @@ describe BodyParty::Document do
           'company[@id=10 @debt=false @running=true]/name?=Tech Solutions Inc 2',
           'company[@id=10 @debt=false @running=true]/industry?=Sass',
           'company[@id=10 @debt=false @running=true]/location?=New york',
-          'company[@id=10 @debt=false @running=true]/employees?=1000',
+          'company[@id=10 @debt=false @running=true]/employees?=1000'
         ]
         generated_xml = described_class.generate(xpaths: xpaths)
 
@@ -137,55 +137,55 @@ describe BodyParty::Document do
         expect(generated_xml).to be_equivalent_to(example)
       end
     end
-    context "more than three levels nodes" do
-      it "should return expected XML with one attribute" do
-        xpaths = 
+    context 'more than three levels nodes' do
+      it 'should return expected XML with one attribute' do
+        xpaths =
           [
-            "university/departments/department[@id=1]/name?=Computer Science",
-            "university/departments/department[@id=1]/courses/course[@id=CS101]/title?=Introduction to Programming",
-            "university/departments/department[@id=1]/courses/course[@id=CS101]/credits?=4",
-            "university/departments/department[@id=1]/courses/course[@id=CS101]/professor/name?=Dr. Alice Smith",
-            "university/departments/department[@id=1]/courses/course[@id=CS101]/professor/office?=Building A, Room 101",
-            "university/departments/department[@id=1]/courses/course[@id=CS101]/schedule/day?=Monday",
-            "university/departments/department[@id=1]/courses/course[@id=CS101]/schedule/time?=09:00 - 11:00",
-            "university/departments/department[@id=1]/courses/course[@id=CS101]/students/student[@id=S001]/name?=John Doe",
-            "university/departments/department[@id=1]/courses/course[@id=CS101]/students/student[@id=S001]/grade?=A",
-            "university/departments/department[@id=1]/courses/course[@id=CS101]/students/student[@id=S002]/name?=Jane Roe",
-            "university/departments/department[@id=1]/courses/course[@id=CS101]/students/student[@id=S002]/grade?=B+",
-            "university/departments/department[@id=1]/courses/course[@id=CS102]/title?=Data Structures",
-            "university/departments/department[@id=1]/courses/course[@id=CS102]/credits?=3",
-            "university/departments/department[@id=1]/courses/course[@id=CS102]/professor/name?=Dr. Bob Williams",
-            "university/departments/department[@id=1]/courses/course[@id=CS102]/professor/office?=Building A, Room 102",
-            "university/departments/department[@id=1]/courses/course[@id=CS102]/schedule/day?=Wednesday",
-            "university/departments/department[@id=1]/courses/course[@id=CS102]/schedule/time?=13:00 - 15:00",
-            "university/departments/department[@id=1]/courses/course[@id=CS102]/students/student[@id=S003]/name?=Alex Brown",
-            "university/departments/department[@id=1]/courses/course[@id=CS102]/students/student[@id=S003]/grade?=A-",
-            "university/departments/department[@id=2]/name?=Mathematics",
-            "university/departments/department[@id=2]/courses/course[@id=MATH101]/title?=Calculus I",
-            "university/departments/department[@id=2]/courses/course[@id=MATH101]/credits?=4",
-            "university/departments/department[@id=2]/courses/course[@id=MATH101]/professor/name?=Dr. Carol Johnson",
-            "university/departments/department[@id=2]/courses/course[@id=MATH101]/professor/office?=Building B, Room 201",
-            "university/departments/department[@id=2]/courses/course[@id=MATH101]/schedule/day?=Tuesday",
-            "university/departments/department[@id=2]/courses/course[@id=MATH101]/schedule/time?=10:00 - 12:00",
-            "university/departments/department[@id=2]/courses/course[@id=MATH101]/students/student[@id=S004]/name?=Emily White",
-            "university/departments/department[@id=2]/courses/course[@id=MATH101]/students/student[@id=S004]/grade?=B",
-            "university/departments/department[@id=2]/courses/course[@id=MATH101]/students/student[@id=S005]/name?=Chris Green",
-            "university/departments/department[@id=2]/courses/course[@id=MATH101]/students/student[@id=S005]/grade?=A",
-            "university/students/student[@id=S001]/name?=John Doe",
-            "university/students/student[@id=S001]/major?=Computer Science",
-            "university/students/student[@id=S001]/year?=2",
-            "university/students/student[@id=S002]/name?=Jane Roe",
-            "university/students/student[@id=S002]/major?=Computer Science",
-            "university/students/student[@id=S002]/year?=2",
-            "university/students/student[@id=S003]/name?=Alex Brown",
-            "university/students/student[@id=S003]/major?=Computer Science",
-            "university/students/student[@id=S003]/year?=3",
-            "university/students/student[@id=S004]/name?=Emily White",
-            "university/students/student[@id=S004]/major?=Mathematics",
-            "university/students/student[@id=S004]/year?=1",
-            "university/students/student[@id=S005]/name?=Chris Green",
-            "university/students/student[@id=S005]/major?=Mathematics",
-            "university/students/student[@id=S005]/year?=1"
+            'university/departments/department[@id=1]/name?=Computer Science',
+            'university/departments/department[@id=1]/courses/course[@id=CS101]/title?=Introduction to Programming',
+            'university/departments/department[@id=1]/courses/course[@id=CS101]/credits?=4',
+            'university/departments/department[@id=1]/courses/course[@id=CS101]/professor/name?=Dr. Alice Smith',
+            'university/departments/department[@id=1]/courses/course[@id=CS101]/professor/office?=Building A, Room 101',
+            'university/departments/department[@id=1]/courses/course[@id=CS101]/schedule/day?=Monday',
+            'university/departments/department[@id=1]/courses/course[@id=CS101]/schedule/time?=09:00 - 11:00',
+            'university/departments/department[@id=1]/courses/course[@id=CS101]/students/student[@id=S001]/name?=John Doe',
+            'university/departments/department[@id=1]/courses/course[@id=CS101]/students/student[@id=S001]/grade?=A',
+            'university/departments/department[@id=1]/courses/course[@id=CS101]/students/student[@id=S002]/name?=Jane Roe',
+            'university/departments/department[@id=1]/courses/course[@id=CS101]/students/student[@id=S002]/grade?=B+',
+            'university/departments/department[@id=1]/courses/course[@id=CS102]/title?=Data Structures',
+            'university/departments/department[@id=1]/courses/course[@id=CS102]/credits?=3',
+            'university/departments/department[@id=1]/courses/course[@id=CS102]/professor/name?=Dr. Bob Williams',
+            'university/departments/department[@id=1]/courses/course[@id=CS102]/professor/office?=Building A, Room 102',
+            'university/departments/department[@id=1]/courses/course[@id=CS102]/schedule/day?=Wednesday',
+            'university/departments/department[@id=1]/courses/course[@id=CS102]/schedule/time?=13:00 - 15:00',
+            'university/departments/department[@id=1]/courses/course[@id=CS102]/students/student[@id=S003]/name?=Alex Brown',
+            'university/departments/department[@id=1]/courses/course[@id=CS102]/students/student[@id=S003]/grade?=A-',
+            'university/departments/department[@id=2]/name?=Mathematics',
+            'university/departments/department[@id=2]/courses/course[@id=MATH101]/title?=Calculus I',
+            'university/departments/department[@id=2]/courses/course[@id=MATH101]/credits?=4',
+            'university/departments/department[@id=2]/courses/course[@id=MATH101]/professor/name?=Dr. Carol Johnson',
+            'university/departments/department[@id=2]/courses/course[@id=MATH101]/professor/office?=Building B, Room 201',
+            'university/departments/department[@id=2]/courses/course[@id=MATH101]/schedule/day?=Tuesday',
+            'university/departments/department[@id=2]/courses/course[@id=MATH101]/schedule/time?=10:00 - 12:00',
+            'university/departments/department[@id=2]/courses/course[@id=MATH101]/students/student[@id=S004]/name?=Emily White',
+            'university/departments/department[@id=2]/courses/course[@id=MATH101]/students/student[@id=S004]/grade?=B',
+            'university/departments/department[@id=2]/courses/course[@id=MATH101]/students/student[@id=S005]/name?=Chris Green',
+            'university/departments/department[@id=2]/courses/course[@id=MATH101]/students/student[@id=S005]/grade?=A',
+            'university/students/student[@id=S001]/name?=John Doe',
+            'university/students/student[@id=S001]/major?=Computer Science',
+            'university/students/student[@id=S001]/year?=2',
+            'university/students/student[@id=S002]/name?=Jane Roe',
+            'university/students/student[@id=S002]/major?=Computer Science',
+            'university/students/student[@id=S002]/year?=2',
+            'university/students/student[@id=S003]/name?=Alex Brown',
+            'university/students/student[@id=S003]/major?=Computer Science',
+            'university/students/student[@id=S003]/year?=3',
+            'university/students/student[@id=S004]/name?=Emily White',
+            'university/students/student[@id=S004]/major?=Mathematics',
+            'university/students/student[@id=S004]/year?=1',
+            'university/students/student[@id=S005]/name?=Chris Green',
+            'university/students/student[@id=S005]/major?=Mathematics',
+            'university/students/student[@id=S005]/year?=1'
           ]
         generated_xml = described_class.generate(xpaths: xpaths)
 
@@ -301,3 +301,4 @@ describe BodyParty::Document do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength, Layout/LineLength
