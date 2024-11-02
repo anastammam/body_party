@@ -90,6 +90,9 @@ module BodyParty
     end
 
     def self.generate(**args)
+      # types = %i[json xml]
+      # document_format = args.fetch(:format)
+      # raise "Format should be etiher json or xml" unless types.include?(document_format)
       xpaths = args.fetch(:xpaths)
       new(xpaths:).generate!
     end

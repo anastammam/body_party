@@ -29,7 +29,6 @@ describe BodyParty::XPathParser do
 end
 
 describe BodyParty::XPathElement do
-
   context "attributes" do
     it "should return attributes of the element" do
       xpath_element = described_class.new("user[@subscribed=true @plan=monthly]")
@@ -42,7 +41,7 @@ describe BodyParty::XPathElement do
       xpath_element = described_class.new("user[@subscribed=true @plan=monthly]")
       expect(xpath_element.value).to eq("")
     end
-    
+
     it "should return correct xpath value" do
       xpath_element = described_class.new("username[@subscribed=true @plan=monthly]?=anas")
       expect(xpath_element.value).to eq("anas")

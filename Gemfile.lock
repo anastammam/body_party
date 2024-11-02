@@ -1,16 +1,22 @@
 GEM
+  remote: https://rubygems.org/
   specs:
     debug (1.9.2)
       irb (~> 1.10)
       reline (>= 0.3.8)
     diff-lcs (1.5.1)
+    equivalent-xml (0.6.0)
+      nokogiri (>= 1.4.3)
     io-console (0.7.2)
     irb (1.13.1)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
+    nokogiri (1.16.7-x86_64-darwin)
+      racc (~> 1.4)
     ox (2.14.18)
     psych (5.1.2)
       stringio
+    racc (1.8.1)
     rdoc (6.6.3.1)
       psych (>= 4.0.0)
     reline (0.5.7)
@@ -31,11 +37,11 @@ GEM
     stringio (3.1.0)
 
 PLATFORMS
-  ruby
-  x86_64-darwin-23
+  x86_64-darwin
 
 DEPENDENCIES
   debug
+  equivalent-xml
   ox
   rspec
 
