@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-
-gem 'debug'
-gem 'equivalent-xml'
 gem 'ox'
-gem 'rspec'
+
+group :development do 
+  gem 'rspec'
+  gem 'rubocop', '~> 1.68', require: false
+  gem 'debug'
+  gem 'equivalent-xml'
+
+end

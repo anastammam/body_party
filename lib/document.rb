@@ -1,9 +1,12 @@
+require 'stringio'
+
 module BodyParty
   class Document
-    attr_accessor :xpaths, :doc
+    attr_accessor :xpaths, :doc, :type
 
     def initialize(**args)
       @xpaths = args.fetch(:xpaths)
+      @type = args.fetch(:type, :xml)
       @doc = build_doc
     end
 
@@ -14,6 +17,14 @@ module BodyParty
         doc << node unless doc.nodes.any? { |n| node.equal?(n) }
       end
       ox = Ox.dump(doc)
+      if type == :hash
+        StringIO.new(ox)
+        parser = HashParser.new
+        Ox.sax_parse(parser, ox)
+        parser.to_h
+      elsif type == :xml
+        ox
+      end
     end
  
     def create_node_from_xpath(xpath)
@@ -90,11 +101,11 @@ module BodyParty
     end
 
     def self.generate(**args)
-      # types = %i[json xml]
-      # document_format = args.fetch(:format)
-      # raise "Format should be etiher json or xml" unless types.include?(document_format)
+      types = %i[hash xml]
+      type = args.fetch(:type, :xml)
+      raise "Format should be etiher :hash or :xml" unless types.include?(type)
       xpaths = args.fetch(:xpaths)
-      new(xpaths:).generate!
+      new(xpaths: xpaths, type: type).generate!
     end
 
     def build_doc
