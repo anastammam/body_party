@@ -74,6 +74,35 @@ describe BodyParty::Document do
         }
         expect(example).to eq(generated_json)
       end
+
+      it "should return correct json format with more than one attribute [Array]" do
+        xpaths = [
+          "pii[@guest_id=96 @paid=true]/first_name?=anas",
+          "pii[@guest_id=96 @paid=true]/last_name?=tammam",
+          "pii[@guest_id=100 @paid=true]/first_name?=rula",
+          "pii[@guest_id=100 @paid=true]/last_name?=abbs"
+        ]
+
+        generated_json = described_class.generate(xpaths: xpaths, type: :hash)
+        example = {
+          pii:
+            [
+              {
+                paid: "true",
+                guest_id: "96",
+                first_name: "anas",
+                last_name: "tammam"
+              },
+              {
+                paid: "true",
+                guest_id: "100",
+                first_name: "rula",
+                last_name: "abbs"
+              }
+            ]
+        }
+        expect(example).to eq(generated_json)
+      end
     end
   end
 
