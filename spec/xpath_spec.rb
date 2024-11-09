@@ -2,12 +2,12 @@
 
 require 'spec_helper'
 
-describe BodyParty::XPathParser do
+describe BodyParty::XpathParser do
   let(:xpath) { 'food/order[@delivered=false @paid=false]/name?=Pasta' }
   let(:xpath_parser) { described_class.new(xpath) }
 
   it 'should return correct root element' do
-    expect(xpath_parser.root).to eq(BodyParty::XPathElement.new('food'))
+    expect(xpath_parser.root.name).to eq(BodyParty::XpathElement.new('food').name)
   end
 
   it 'should return correct root name' do
@@ -21,15 +21,16 @@ describe BodyParty::XPathParser do
   it 'should return correct childrens elements' do
     xpath_parser = described_class.new(xpath)
     childrens = [
-      BodyParty::XPathElement.new('order[@delivered=false @paid=false]'),
-      BodyParty::XPathElement.new('name?=Pasta')
+      BodyParty::XpathElement.new('order[@delivered=false @paid=false]'),
+      BodyParty::XpathElement.new('name?=Pasta')
 
     ]
-    expect(xpath_parser.childrens).to match_array(childrens)
+    expect(xpath_parser.childrens[0]).to have_attributes(element: "order[@delivered=false @paid=false]")
+    expect(xpath_parser.childrens[1]).to have_attributes(element: "name?=Pasta")
   end
 end
 
-describe BodyParty::XPathElement do
+describe BodyParty::XpathElement do
   context 'attributes' do
     it 'should return attributes of the element' do
       xpath_element = described_class.new('user[@subscribed=true @plan=monthly]')

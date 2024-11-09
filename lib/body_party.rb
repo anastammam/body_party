@@ -2,7 +2,8 @@
 
 require 'ox'
 
-require 'xpath'
+require 'xpath_parser'
+require 'xpath_element'
 require 'document'
 require 'node'
 require 'hash_parser'

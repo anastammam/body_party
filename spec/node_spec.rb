@@ -4,9 +4,9 @@ require 'spec_helper'
 
 describe BodyParty::Node do
   context 'Ox Node' do
-    let(:node_with_attributes) { described_class.new(BodyParty::XPathElement.new('department[@id=1]')) }
-    let(:node_with_attributes_and_value) { described_class.new(BodyParty::XPathElement.new('department[@id=1]?=IT')) }
-    let(:node) { described_class.new(BodyParty::XPathElement.new('department')) }
+    let(:node_with_attributes) { described_class.new(BodyParty::XpathElement.new('department[@id=1]')) }
+    let(:node_with_attributes_and_value) { described_class.new(BodyParty::XpathElement.new('department[@id=1]?=IT')) }
+    let(:node) { described_class.new(BodyParty::XpathElement.new('department')) }
 
     it 'should respond to #node with Ox::Element' do
       expect(node.node).to be_instance_of(Ox::Element)

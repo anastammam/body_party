@@ -14,7 +14,7 @@ module BodyParty
 
     def generate!
       xpaths.each do |xpath|
-        xpath_parser = ::BodyParty::XPathParser.new(xpath)
+        xpath_parser = BodyParty::XpathParser.new(xpath)
         node = create_node_from_xpath(xpath_parser)
         doc << node unless doc.nodes.any? { |n| node.equal?(n) }
       end
@@ -94,7 +94,7 @@ module BodyParty
     end
 
     def create_node(element)
-      BodyParty::Node.new(element).node
+      Node.new(element).node
     end
 
     def self.generate(**args)
