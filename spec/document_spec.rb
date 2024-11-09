@@ -6,81 +6,81 @@ require 'equivalent-xml'
 # rubocop:disable Metrics/BlockLength, Layout/LineLength
 describe BodyParty::Document do
   describe '#generate! type: hash' do
-    context "one level node" do
-      it "should return correct json format without attribute" do
+    context 'one level node' do
+      it 'should return correct json format without attribute' do
         xpaths = [
-          "first_name?=anas",
-          "last_name?=tammam"
+          'first_name?=anas',
+          'last_name?=tammam'
         ]
 
         generated_json = described_class.generate(xpaths: xpaths, type: :hash)
         example = {
-          first_name: "anas",
-          last_name: "tammam"
+          first_name: 'anas',
+          last_name: 'tammam'
         }
 
         expect(example).to eq(generated_json)
       end
     end
 
-    context "two level nodes" do
-      it "should return correct json format without attribute" do
+    context 'two level nodes' do
+      it 'should return correct json format without attribute' do
         xpaths = [
-          "pii/first_name?=anas",
-          "pii/last_name?=tammam"
+          'pii/first_name?=anas',
+          'pii/last_name?=tammam'
         ]
 
         generated_json = described_class.generate(xpaths: xpaths, type: :hash)
         example = {
           pii: {
-            first_name: "anas",
-            last_name: "tammam"
+            first_name: 'anas',
+            last_name: 'tammam'
           }
         }
         expect(example).to eq(generated_json)
       end
 
-      it "should return correct json format with one attribute" do
+      it 'should return correct json format with one attribute' do
         xpaths = [
-          "pii[@guest_id=96]/first_name?=anas",
-          "pii[@guest_id=96]/last_name?=tammam"
+          'pii[@guest_id=96]/first_name?=anas',
+          'pii[@guest_id=96]/last_name?=tammam'
         ]
 
         generated_json = described_class.generate(xpaths: xpaths, type: :hash)
         example = {
           pii: {
-            guest_id: "96",
-            first_name: "anas",
-            last_name: "tammam"
+            guest_id: '96',
+            first_name: 'anas',
+            last_name: 'tammam'
           }
         }
         expect(example).to eq(generated_json)
       end
 
-      it "should return correct json format with more than one attribute" do
+      it 'should return correct json format with more than one attribute' do
         xpaths = [
-          "pii[@guest_id=96 @paid=true]/first_name?=anas",
-          "pii[@guest_id=96 @paid=true]/last_name?=tammam"
+          'pii[@guest_id=96 @paid=true]/first_name?=anas',
+          'pii[@guest_id=96 @paid=true]/last_name?=tammam'
         ]
 
         generated_json = described_class.generate(xpaths: xpaths, type: :hash)
         example = {
           pii: {
-            paid: "true",
-            guest_id: "96",
-            first_name: "anas",
-            last_name: "tammam"
+            paid: 'true',
+            guest_id: '96',
+            first_name: 'anas',
+            last_name: 'tammam'
           }
         }
         expect(example).to eq(generated_json)
       end
 
-      it "should return correct json format with more than one attribute [Array]" do
+      it 'should return correct json format with more than one attribute [Array]' do
         xpaths = [
-          "pii[@guest_id=96 @paid=true]/first_name?=anas",
-          "pii[@guest_id=96 @paid=true]/last_name?=tammam",
-          "pii[@guest_id=100 @paid=true]/first_name?=rula",
-          "pii[@guest_id=100 @paid=true]/last_name?=abbs"
+          'pii[@guest_id=96 @paid=true]/first_name?=anas',
+          'pii[@guest_id=96 @paid=true]/last_name?=tammam',
+          'pii[@guest_id=100 @paid=true]/first_name?=rula',
+          'pii[@guest_id=100 @paid=true]/last_name?=abbs'
         ]
 
         generated_json = described_class.generate(xpaths: xpaths, type: :hash)
@@ -88,16 +88,16 @@ describe BodyParty::Document do
           pii:
             [
               {
-                paid: "true",
-                guest_id: "96",
-                first_name: "anas",
-                last_name: "tammam"
+                paid: 'true',
+                guest_id: '96',
+                first_name: 'anas',
+                last_name: 'tammam'
               },
               {
-                paid: "true",
-                guest_id: "100",
-                first_name: "rula",
-                last_name: "abbs"
+                paid: 'true',
+                guest_id: '100',
+                first_name: 'rula',
+                last_name: 'abbs'
               }
             ]
         }
@@ -108,10 +108,10 @@ describe BodyParty::Document do
 
   describe '#generate! type: xml' do
     context 'one level nodes' do
-      it "should return correct XML without attributes" do
+      it 'should return correct XML without attributes' do
         xpaths = [
-          "first_name?=anas",
-          "last_name?=tammam"
+          'first_name?=anas',
+          'last_name?=tammam'
         ]
 
         generated_xml = described_class.generate(xpaths: xpaths)
@@ -124,10 +124,10 @@ describe BodyParty::Document do
 
         expect(generated_xml).to be_equivalent_to(example)
       end
-      it "should return correct XML with one attribute" do
+      it 'should return correct XML with one attribute' do
         xpaths = [
-          "first_name[@user_id=10]?=anas",
-          "last_name[@user_id=10]?=tammam"
+          'first_name[@user_id=10]?=anas',
+          'last_name[@user_id=10]?=tammam'
         ]
 
         generated_xml = described_class.generate(xpaths: xpaths)
@@ -141,10 +141,10 @@ describe BodyParty::Document do
         expect(generated_xml).to be_equivalent_to(example)
       end
 
-      it "should return correct XML with one attribute" do
+      it 'should return correct XML with one attribute' do
         xpaths = [
-          "first_name[@user_id=10]?=anas",
-          "last_name[@user_id=10]?=tammam"
+          'first_name[@user_id=10]?=anas',
+          'last_name[@user_id=10]?=tammam'
         ]
 
         generated_xml = described_class.generate(xpaths: xpaths)
@@ -158,10 +158,10 @@ describe BodyParty::Document do
         expect(generated_xml).to be_equivalent_to(example)
       end
 
-      it "should return correct XML with more than one attribute" do
+      it 'should return correct XML with more than one attribute' do
         xpaths = [
-          "first_name[@user_id=10 @full_name=true]?=anas",
-          "last_name[@user_id=10 @full_name=false]?=tammam"
+          'first_name[@user_id=10 @full_name=true]?=anas',
+          'last_name[@user_id=10 @full_name=false]?=tammam'
         ]
 
         generated_xml = described_class.generate(xpaths: xpaths)

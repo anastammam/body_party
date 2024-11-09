@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'stringio'
 
 module BodyParty
@@ -26,24 +28,21 @@ module BodyParty
         ox
       end
     end
- 
+
     def create_node_from_xpath(xpath)
       root_node = find_or_create_root_node(xpath.root)
 
       create_child_nodes(root_node, xpath.childrens)
       root_node
     end
-    
+
     # Find last possible parent within the childrens
     def find_last_child(parent, childrens)
       return parent if childrens.empty?
-      
-      if childrens.count == 1 # Last child will the one to be created
-        return parent
-      end
-      
-      child_element = childrens.shift
 
+      return parent if childrens.count == 1 # Last child will the one to be created
+
+      child_element = childrens.shift
 
       child = locate_child(parent, child_element)
 
@@ -62,6 +61,7 @@ module BodyParty
 
       if childrens.count <= 1
         return root if childrens.empty?
+
         last_node_name = childrens.shift
         child = create_node(last_node_name)
         root << child
@@ -73,29 +73,26 @@ module BodyParty
 
       root << create_child_nodes(child, childrens)
     end
-    
-    def locate_child(parent, child)
 
+    def locate_child(parent, child)
       child_attributes = child.attributes
       child_name = child.name
 
-      unless child_attributes.empty?
-        formatted_child_attributes =
-          child_attributes.map { |attr, value| "#{child_name}[@#{attr}=#{value}]" }
-        match = formatted_child_attributes.all? do |attr|
-          child = parent.locate(attr).last
-          return nil if child.nil?
-          return child if child&.attributes&.transform_keys(&:to_s).to_a == child_attributes
-        end
-      else
-        return parent.locate(child_name).first
+      return parent.locate(child_name).first if child_attributes.empty?
+
+      formatted_child_attributes =
+        child_attributes.map { |attr, value| "#{child_name}[@#{attr}=#{value}]" }
+      formatted_child_attributes.all? do |attr|
+        child = parent.locate(attr).last
+        return nil if child.nil?
+        return child if child&.attributes&.transform_keys(&:to_s).to_a == child_attributes
       end
     end
 
     def find_or_create_root_node(xpath)
       locate_child(doc, xpath) || create_node(xpath)
     end
-    
+
     def create_node(element)
       BodyParty::Node.new(element).node
     end
@@ -103,7 +100,8 @@ module BodyParty
     def self.generate(**args)
       types = %i[hash xml]
       type = args.fetch(:type, :xml)
-      raise "Format should be etiher :hash or :xml" unless types.include?(type)
+      raise 'Format should be etiher :hash or :xml' unless types.include?(type)
+
       xpaths = args.fetch(:xpaths)
       new(xpaths: xpaths, type: type).generate!
     end

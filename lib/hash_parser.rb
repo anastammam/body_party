@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 # Thanks to https://github.com/xkwd/oxml
 
 class HashParser < ::Ox::Sax
   EMPTY_STR = ''
   TRUE_STR = 'true'
   FALSE_STR = 'false'
-  DATE_TIME = /^-?\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})?$/.freeze
-  DATE = /^-?\d{4}-\d{2}-\d{2}(?:Z|[+-]\d{2}:?\d{2})?$/.freeze
-  TIME = /^\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})?$/.freeze
+  DATE_TIME = /^-?\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})?$/
+  DATE = /^-?\d{4}-\d{2}-\d{2}(?:Z|[+-]\d{2}:?\d{2})?$/
+  TIME = /^\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})?$/
 
   def initialize(options = {})
     @memo = {}
@@ -44,10 +46,10 @@ class HashParser < ::Ox::Sax
   end
 
   def attrs_done
-    if @last_attr =~ /nil:true/
-      @last_attr = nil
-      @arr.last[@name] = nil
-    end
+    return unless @last_attr =~ /nil:true/
+
+    @last_attr = nil
+    @arr.last[@name] = nil
   end
 
   def end_element(_name)
