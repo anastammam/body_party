@@ -13,6 +13,10 @@ requires ruby version > 3 later will support early versions
 gem install body_party --pre
 ```
 
+```bash
+gem 'body_party', '~> 0.0.1.pre'
+```
+
 ## Usage
 
 ```ruby
@@ -191,6 +195,8 @@ BodyParty::Document.generate(xpaths: array, type: :xml)
   <employees>1000</employees>
 </company>
 ```
+
+[RubyGems](https://rubygems.org/gems/body_party)
 
 ## Contributing
 
