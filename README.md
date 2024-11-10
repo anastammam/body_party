@@ -5,6 +5,8 @@ This gem can be especially useful for interacting with APIs to generate requests
 
 BodyParty is built on top of the fast XML parser [OX gem](https://github.com/ohler55/ox), which is implemented in C for speed.
 
+requires ruby version > 3 later will support early versions
+
 ## Installation
 
 ```bash
@@ -25,7 +27,8 @@ array = [
 ]
 
 BodyParty::Document.generate(xpaths: array, type: :hash)
-=>
+
+# => :hash
 {
   :user => {
     :id => "1001",
@@ -40,7 +43,7 @@ BodyParty::Document.generate(xpaths: array, type: :hash)
 
 
 BodyParty::Document.generate(xpaths: array, type: :xml)
-=>
+# => :xml
 <?xml version="1.0" encoding="UTF-8"?>
 <user>
   <id>1001</id>
@@ -78,7 +81,8 @@ BodyParty::Document.generate(xpaths: array, type: :hash)
 }
 
 BodyParty::Document.generate(xpaths: array, type: :xml)
-# =>
+
+# => :xml
 <?xml version="1.0" encoding="UTF-8"?>
 <pii>
   <first_name>john</first_name>
@@ -93,7 +97,7 @@ array = [
 ]
 BodyParty::Document.generate(xpaths: array, type: :hash)
 
-# =>
+# => :hash
 
 {
   pii: {
@@ -105,7 +109,7 @@ BodyParty::Document.generate(xpaths: array, type: :hash)
 
 BodyParty::Document.generate(xpaths: array, type: :xml)
 
-# =>
+# => :xml
 
 <?xml version="1.0" encoding="UTF-8"?>
 <pii guest_id="96">
@@ -134,7 +138,7 @@ array = [
 
 BodyParty::Document.generate(xpaths: array, type: :hash)
 
-# =>
+# => :hash
 {
   :person => {
     :id => "1",
@@ -165,7 +169,7 @@ BodyParty::Document.generate(xpaths: array, type: :hash)
 
 BodyParty::Document.generate(xpaths: array, type: :xml)
 
-# =>
+# => :xml
 <?xml version="1.0" encoding="UTF-8"?>
 <person id="1" db_id="847503">
   <name>John Doe</name>
@@ -188,6 +192,7 @@ BodyParty::Document.generate(xpaths: array, type: :xml)
   <employees>1000</employees>
 </company>
 ```
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first
