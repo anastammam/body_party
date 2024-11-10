@@ -43,6 +43,7 @@ BodyParty::Document.generate(xpaths: array, type: :hash)
 
 
 BodyParty::Document.generate(xpaths: array, type: :xml)
+
 # => :xml
 <?xml version="1.0" encoding="UTF-8"?>
 <user>
@@ -98,7 +99,6 @@ array = [
 BodyParty::Document.generate(xpaths: array, type: :hash)
 
 # => :hash
-
 {
   pii: {
     guest_id: '96',
@@ -110,7 +110,6 @@ BodyParty::Document.generate(xpaths: array, type: :hash)
 BodyParty::Document.generate(xpaths: array, type: :xml)
 
 # => :xml
-
 <?xml version="1.0" encoding="UTF-8"?>
 <pii guest_id="96">
   <first_name>john</first_name>
